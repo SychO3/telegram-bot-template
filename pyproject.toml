@@ -13,6 +13,7 @@ python = "^3.10"
 sqlalchemy = "^2.0.34"
 pydantic = "^2.8.2"
 pydantic-settings = "^2.5.2"
+greenlet = "^3.1.0"
 
 [tool.poetry.group.bot.dependencies]
 aiogram = "^3.13.0"
