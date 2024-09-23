@@ -37,7 +37,7 @@ async def on_startup() -> None:
     states: dict[bool | None, str] = {
         True: "Enabled",
         False: "Disabled",
-        None: "Unknown (This's not a bot)",
+        None: "Unknown (Thees's not a bot)",
     }
 
     logger.info(f"Groups Mode  - {states[bot_info.can_join_groups]}")
