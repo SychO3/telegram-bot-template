@@ -40,23 +40,23 @@ class BotSettings(WebhookSettings):
 
 
 class DBSettings(EnvBaseSettings):
-    DB_HOST: str = "postgres"
-    DB_PORT: int = 5432
-    DB_USER: str = "postgres"
+    DB_HOST: str = "localhost"
+    DB_PORT: int = 3306
+    DB_USER: str = "root"
     DB_PASS: str | None = None
-    DB_NAME: str = "postgres"
+    DB_NAME: str = "bot_db"
 
     @property
     def database_url(self) -> URL | str:
         if self.DB_PASS:
-            return f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
-        return f"postgresql+asyncpg://{self.DB_USER}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+            return f"mysql+aiomysql://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        return f"mysql+aiomysql://{self.DB_USER}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
 
     @property
-    def database_url_psycopg2(self) -> str:
+    def database_url_sync(self) -> str:
         if self.DB_PASS:
-            return f"postgresql://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
-        return f"postgresql://{self.DB_USER}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+            return f"mysql://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        return f"mysql://{self.DB_USER}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
 
 
 class CacheSettings(EnvBaseSettings):

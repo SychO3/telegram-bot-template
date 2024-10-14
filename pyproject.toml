@@ -13,10 +13,12 @@ python = "^3.10"
 sqlalchemy = "^2.0.35"
 pydantic = "^2.9.2"
 pydantic-settings = "^2.5.2"
+aiomysql = "^0.2.0"
+greenlet = "^3.1.1"
+setuptools = "^75.1.0"
 
 [tool.poetry.group.bot.dependencies]
 aiogram = "^3.13.1"
-asyncpg = "^0.29.0"
 redis = "^5.1.1"
 loguru = "^0.7.2"
 sentry-sdk = {extras = ["loguru"], version = "^2.16.0"}
