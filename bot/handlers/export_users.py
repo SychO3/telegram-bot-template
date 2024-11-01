@@ -26,4 +26,4 @@ async def export_users_handler(message: Message, session: AsyncSession) -> None:
     document: BufferedInputFile = await convert_users_to_csv(all_users)
     count: int = await get_user_count(session)
 
-    await message.answer_document(document=document, caption=_("user counter: <b>{count}</b>").format(count=count))
+    await message.answer_document(document=document, caption=_("用户总数：<b>{count}</b>").format(count=count))

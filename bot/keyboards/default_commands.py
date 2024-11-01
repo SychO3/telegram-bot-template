@@ -28,6 +28,13 @@ users_commands: dict[str, dict[str, str]] = {
         "settings": "setting information about you",
         "supports": "support contacts",
     },
+    "zh": {
+        "help": "帮助",
+        "contacts": "联系方式",
+        "menu": "主菜单",
+        "settings": "设置",
+        "supports": "支持",
+    },
 }
 
 admins_commands: dict[str, dict[str, str]] = {
@@ -43,6 +50,10 @@ admins_commands: dict[str, dict[str, str]] = {
     "ru": {
         "ping": "Check bot ping",
         "stats": "Show bot stats",
+    },
+    "zh": {
+        "ping": "检查机器人ping",
+        "stats": "显示机器人统计信息",
     },
 }
 

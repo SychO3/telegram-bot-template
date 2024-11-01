@@ -2,9 +2,8 @@
 pybabel extract --input-dirs=. -o bot/locales/messages.pot --project=messages.
 
 2. Init translations
+pybabel init -i bot/locales/messages.pot -d bot/locales -D messages -l zh
 pybabel init -i bot/locales/messages.pot -d bot/locales -D messages -l en
-pybabel init -i bot/locales/messages.pot -d bot/locales -D messages -l ru
-pybabel init -i bot/locales/messages.pot -d bot/locales -D messages -l uk
 
 3. Compile translations
 pybabel compile -d bot/locales -D messages --statistics

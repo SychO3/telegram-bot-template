@@ -5,9 +5,8 @@ from aiohttp.web_response import Response
 
 
 class MetricsView(web.View):
-    def __init__(
-        self, request: Request, registry: prometheus_client.CollectorRegistry = prometheus_client.REGISTRY
-    ) -> None:
+    def __init__(self, request: Request, registry: prometheus_client.CollectorRegistry = prometheus_client.REGISTRY) -> None:
+        super().__init__(request)
         self._request = request
         self.registry = registry
 

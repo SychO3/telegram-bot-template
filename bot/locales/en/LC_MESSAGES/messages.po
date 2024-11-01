@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages. VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-14 22:43+0800\n"
-"PO-Revision-Date: 2024-10-14 22:43+0800\n"
+"POT-Creation-Date: 2024-11-02 02:05+0800\n"
+"PO-Revision-Date: 2024-11-02 02:05+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -19,43 +19,46 @@ msgstr ""
 "Generated-By: Babel 2.16.0\n"
 
 #: bot/handlers/export_users.py:29
-msgid "user counter: <b>{count}</b>"
+msgid "用户总数：<b>{count}</b>"
 msgstr ""
 
 #: bot/handlers/info.py:11
-msgid "about"
+msgid "关于"
 msgstr ""
 
 #: bot/handlers/menu.py:13
-msgid "title main keyboard"
+msgid "主菜单标题"
 msgstr ""
 
 #: bot/handlers/start.py:15
-msgid "first message"
+msgid "第一条信息"
 msgstr ""
 
 #: bot/handlers/support.py:13
-msgid "support text"
+msgid "支持文本"
 msgstr ""
 
-#: bot/keyboards/inline/contacts.py:11 bot/keyboards/inline/contacts.py:22
-#: bot/keyboards/inline/menu.py:12
-msgid "support button"
+#: bot/keyboards/inline/contacts.py:11
+msgid "联系按钮"
+msgstr ""
+
+#: bot/keyboards/inline/contacts.py:22 bot/keyboards/inline/menu.py:12
+msgid "支持按钮"
 msgstr ""
 
 #: bot/keyboards/inline/contacts.py:23
-msgid "back button"
+msgid "后退按钮"
 msgstr ""
 
 #: bot/keyboards/inline/menu.py:9
-msgid "wallet button"
+msgid "钱包按钮"
 msgstr ""
 
 #: bot/keyboards/inline/menu.py:10
-msgid "premium button"
+msgid "会员按钮"
 msgstr ""
 
 #: bot/keyboards/inline/menu.py:11
-msgid "info button"
+msgid "信息按钮"
 msgstr ""
 

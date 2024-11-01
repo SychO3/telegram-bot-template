@@ -8,4 +8,4 @@ router = Router(name="info")
 @router.message(Command(commands=["info", "help", "about"]))
 async def info_handler(message: types.Message) -> None:
     """Information about bot."""
-    await message.answer(_("about"))
+    await message.answer(_("关于"))

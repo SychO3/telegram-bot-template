@@ -10,4 +10,4 @@ router = Router(name="support")
 @router.message(Command(commands=["supports", "support", "contacts", "contact"]))
 async def support_handler(message: types.Message) -> None:
     """Return a button with a link to the project."""
-    await message.answer(_("support text"), reply_markup=contacts_keyboard())
+    await message.answer(_("支持文本"), reply_markup=contacts_keyboard())

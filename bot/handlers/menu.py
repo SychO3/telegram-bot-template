@@ -10,4 +10,4 @@ router = Router(name="menu")
 @router.message(Command(commands=["menu", "main"]))
 async def menu_handler(message: types.Message) -> None:
     """Return main menu."""
-    await message.answer(_("title main keyboard"), reply_markup=main_keyboard())
+    await message.answer(_("主菜单标题"), reply_markup=main_keyboard())

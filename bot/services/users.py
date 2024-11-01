@@ -24,6 +24,9 @@ async def add_user(
     language_code: str | None = user.language_code
     is_premium: bool = user.is_premium or False
 
+    if language_code and language_code.find("zh") != -1:
+        language_code = "zh"
+
     new_user = UserModel(
         id=user_id,
         first_name=first_name,
