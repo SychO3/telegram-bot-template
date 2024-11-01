@@ -14,21 +14,21 @@ DEBUG: bool = str(os.getenv("DEBUG")).lower() == "true"
 
 BABEL_DEFAULT_LOCALE = os.getenv("BABEL_DEFAULT_LOCALE") or "en"
 
-# Create dummy secrey key so we can use sessions
+# Create dummy secret key so we can use sessions
 SECRET_KEY: str = os.getenv("SECRET_KEY") or "x%#3&%giwv8f0+%r946en7z&d@9*rc$sl0qoql56xr%bh^w2mj"
 
 
 # SQLAlchemy config
 def database_url() -> str:
     db_host: str = os.getenv("DB_HOST") or "localhost"
-    db_port: int = int(os.getenv("DB_PORT") or 5432)
-    db_user: str = os.getenv("DB_USER") or "postgres"
+    db_port: int = int(os.getenv("DB_PORT") or 3306)
+    db_user: str = os.getenv("DB_USER") or "root"
     db_pass: str | None = os.getenv("DB_PASS")
-    db_name: str = os.getenv("DB_NAME") or "postgres"
+    db_name: str = os.getenv("DB_NAME") or "bot_db"
 
     if db_pass:
-        return f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
-    return f"postgresql://{db_user}@{db_host}:{db_port}/{db_name}"
+        return f"mysql+pymysql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
+    return f"mysql+pymysql://{db_user}@{db_host}:{db_port}/{db_name}"
 
 
 SQLALCHEMY_DATABASE_URI: str = database_url()

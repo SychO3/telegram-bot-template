@@ -1,12 +1,12 @@
 import datetime
 from typing import Annotated
 
-from sqlalchemy import BigInteger, text
+from sqlalchemy import BIGINT, text, TIMESTAMP
 from sqlalchemy.orm import DeclarativeBase, mapped_column
 
 int_pk = Annotated[int, mapped_column(primary_key=True, unique=True, autoincrement=False)]
-big_int_pk = Annotated[int, mapped_column(primary_key=True, unique=True, autoincrement=False, type_=BigInteger)]
-created_at = Annotated[datetime.datetime, mapped_column(server_default=text("TIMEZONE('utc', now())"))]
+big_int_pk = Annotated[int, mapped_column(primary_key=True, unique=True, autoincrement=False, type_=BIGINT)]
+created_at = Annotated[datetime.datetime, mapped_column(server_default=text("CURRENT_TIMESTAMP"), type_=TIMESTAMP)]
 
 
 class Base(DeclarativeBase):

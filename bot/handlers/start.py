@@ -9,7 +9,7 @@ router = Router(name="start")
 
 
 @router.message(CommandStart())
-@analytics.track_event("Sign Up")
+# @analytics.track_event("Sign Up")
 async def start_handler(message: types.Message) -> None:
     """Welcome message."""
     await message.answer(_("first message"), reply_markup=main_keyboard())
