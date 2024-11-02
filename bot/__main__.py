@@ -7,12 +7,14 @@ from loguru import logger
 from sentry_sdk.integrations.loguru import LoggingLevels, LoguruIntegration
 
 from bot.core.config import settings
-from bot.core.loader import app, bot, dp
+from bot.core.loader import app, bot, dp, scheduler
 from bot.handlers import get_handlers_router
 from bot.handlers.metrics import MetricsView
 from bot.keyboards.default_commands import remove_default_commands, set_default_commands
 from bot.middlewares import register_middlewares
 from bot.middlewares.prometheus import prometheus_middleware_factory
+
+from bot.tasks import demo
 
 
 async def on_startup() -> None:
@@ -49,6 +51,8 @@ async def on_startup() -> None:
 
 async def on_shutdown() -> None:
     logger.info("bot stopping...")
+
+    scheduler.shutdown()
 
     await remove_default_commands(bot)
 
@@ -87,6 +91,12 @@ async def setup_webhook() -> None:
     await asyncio.Event().wait()
 
 
+async def run_tasks() -> None:
+    scheduler.add_job(demo.demo_task, "interval", seconds=10, args=[bot,])
+    logger.info("scheduler starting...")
+    scheduler.start()
+
+
 async def main() -> None:
     if settings.SENTRY_DSN:
         sentry_loguru = LoguruIntegration(
@@ -111,6 +121,8 @@ async def main() -> None:
 
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
+
+    await run_tasks()
 
     if settings.USE_WEBHOOK:
         await setup_webhook()
