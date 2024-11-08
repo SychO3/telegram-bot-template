@@ -1,5 +1,3 @@
-from time import timezone
-
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
@@ -7,8 +5,8 @@ from aiogram.fsm.storage.base import DefaultKeyBuilder
 from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.utils.i18n.core import I18n
 from aiohttp import web
-from redis.asyncio import ConnectionPool, Redis
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from redis.asyncio import ConnectionPool, Redis
 
 from bot.core.config import DEFAULT_LOCALE, I18N_DOMAIN, LOCALES_DIR, settings
 

@@ -5,9 +5,10 @@ from aiogram import BaseMiddleware, Bot
 from aiogram.enums import ChatMemberStatus
 from aiogram.exceptions import TelegramNotFound
 from aiogram.methods import GetChatMember
+from aiogram.types import Message
 
 if TYPE_CHECKING:
-    from aiogram.types import Message
+    from aiogram.types import TelegramObject
 
 
 class ChannelSubscribeMiddleware(BaseMiddleware):
@@ -19,13 +20,13 @@ class ChannelSubscribeMiddleware(BaseMiddleware):
 
     async def __call__(
         self,
-        handler: Callable[[Message, dict[str, Any]], Awaitable[Any]],
-        event: Message,
+        handler: Callable[[TelegramObject, dict[str, Any]], Awaitable[Any]],
+        event: TelegramObject,
         data: dict[str, Any],
     ) -> Any:
-        message: Message = event
+        message = event if isinstance(event, Message) else None
 
-        if not message.from_user:
+        if not message or not message.from_user:
             return await handler(event, data)
 
         user_id = message.from_user.id

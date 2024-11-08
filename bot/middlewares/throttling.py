@@ -10,7 +10,7 @@ from bot.core.config import settings
 
 class ThrottlingMiddleware(BaseMiddleware):
     def __init__(self, rate_limit: float = settings.RATE_LIMIT) -> None:
-        self.cache = TTLCache(maxsize=10_000, ttl=rate_limit)
+        self.cache: TTLCache[int, None] = TTLCache(maxsize=10_000, ttl=rate_limit)
 
     async def __call__(
             self,

@@ -14,4 +14,4 @@ class AdminFilter(BaseFilter):
 
         user_id = message.from_user.id
 
-        return await is_admin(session=session, user_id=user_id)
+        return bool(await is_admin(session=session, user_id=user_id))

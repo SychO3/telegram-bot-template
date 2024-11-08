@@ -1,11 +1,12 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
+if TYPE_CHECKING:
+    from sqlalchemy.engine.url import URL
+
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.engine.url import URL
 
 from bot.core.config import settings
-
 
 # class CConnection(Connection):
 #     def _get_unique_id(self, prefix: str) -> str:

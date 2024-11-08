@@ -34,7 +34,7 @@ class WebhookSettings(EnvBaseSettings):
 
 
 class BotSettings(WebhookSettings):
-    BOT_TOKEN: str
+    BOT_TOKEN: str = "your_bot_token_here"
     SUPPORT_URL: str | None = None
     RATE_LIMIT: int | float = 0.5  # for throttling control
 
@@ -81,7 +81,7 @@ class Settings(BotSettings, DBSettings, CacheSettings):
 
     SENTRY_DSN: str | None = None
 
-    AMPLITUDE_API_KEY: str  # or for example it could be POSTHOG_API_KEY
+    AMPLITUDE_API_KEY: str | None = None  # 改为可选参数
 
 
 settings = Settings()

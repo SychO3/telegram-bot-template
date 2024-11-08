@@ -40,12 +40,12 @@ def cached(
     cache: Redis = redis_client,
     key_builder: Callable[..., str] = build_key,
     serializer: AbstractSerializer | None = None,
-) -> Callable:
+) -> Callable[..., Any]:
     """Caches the functions return value into a key generated with module_name, function_name and args."""
     if serializer is None:
         serializer = PickleSerializer()
 
-    def decorator(func: Callable) -> Callable:
+    def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
         @wraps(func)
         async def wrapper(*args: tuple[str, Any], **kwargs: dict[str, Any]) -> Any:
             key = key_builder(*args, **kwargs)
@@ -74,7 +74,7 @@ def cached(
 
 
 async def clear_cache(
-    func: Callable,
+    func: Callable[..., Any],
     *args: Any,
     **kwargs: Any,
 ) -> None:
