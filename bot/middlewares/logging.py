@@ -99,7 +99,7 @@ class LoggingMiddleware(BaseMiddleware):
         event: Update,
         data: dict[str, Any],
     ) -> Any:
-        print_attrs: dict = {}
+        print_attrs: dict[str, Any] = {}
 
         if event.message:
             message: Message = event.message
@@ -152,9 +152,9 @@ class LoggingMiddleware(BaseMiddleware):
             )
             self.logger.info(*logger_msg)
         elif event.chat_member:
-            upd: ChatMemberUpdated = event.chat_member
+            chat_member_upd: ChatMemberUpdated = event.chat_member
 
-            print_attrs = self.process_chat_member(upd)
+            print_attrs = self.process_chat_member(chat_member_upd)
 
             logger_msg = (
                 "received chat member update | "
