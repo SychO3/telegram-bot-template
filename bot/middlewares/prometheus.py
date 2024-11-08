@@ -60,7 +60,8 @@ def prometheus_middleware_factory(
         loop = asyncio.get_running_loop() or asyncio.get_event_loop()
 
         try:
-            path_template = request.match_info.route.resource.canonical
+            route = request.match_info.route
+            path_template = route.resource.canonical if route and route.resource else "__not_matched__"
         except AttributeError:
             path_template = "__not_matched__"
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Any, Awaitable, Callable
 
 from aiogram import BaseMiddleware
-from aiogram.types import Message, CallbackQuery, Update
+from aiogram.types import CallbackQuery, Message, Update
 from cachetools import TTLCache
 
 from bot.core.config import settings
@@ -23,11 +23,11 @@ class ThrottlingMiddleware(BaseMiddleware):
         elif isinstance(event, CallbackQuery):
             chat_id = event.message.chat.id if event.message else event.from_user.id
         elif isinstance(event, Update):
-            chat_id = event.message.chat.id if event.message else None
+            chat_id = event.message.chat.id if event.message else 0
         else:
             return await handler(event, data)
 
-        if chat_id is not None and chat_id not in self.cache:
+        if chat_id != 0:
             self.cache[chat_id] = None
             return await handler(event, data)
 

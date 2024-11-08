@@ -3,7 +3,6 @@ from aiogram.filters import CommandStart
 from aiogram.utils.i18n import gettext as _
 
 from bot.keyboards.inline.menu import main_keyboard
-# from bot.services.analytics import analytics
 
 router = Router(name="start")
 
