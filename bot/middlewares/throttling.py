@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Any, Awaitable, Callable
 
 from aiogram import BaseMiddleware
-from aiogram.types import Message, CallbackQuery, Update
+from aiogram.types import CallbackQuery, Message, Update
 from cachetools import TTLCache
 
 from bot.core.config import settings
