@@ -1,0 +1,29 @@
+{% macro pager(page, pages, generator) %}
+{% if pages > 1 %}
+<nav>
+  <ul class="pagination m-0 ms-auto">
+    {% if page > 1 %}
+    <li class="page-item">
+      <a class="page-link" href="{{ generator(page - 1) }}">
+        <i class="ti ti-chevron-left"></i>
+      </a>
+    </li>
+    {% endif %}
+
+    {% for p in range(1, pages + 1) %}
+    <li class="page-item {% if p == page %}active{% endif %}">
+      <a class="page-link" href="{{ generator(p) }}">{{ p }}</a>
+    </li>
+    {% endfor %}
+
+    {% if page < pages %}
+    <li class="page-item">
+      <a class="page-link" href="{{ generator(page + 1) }}">
+        <i class="ti ti-chevron-right"></i>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+{% endmacro %} 

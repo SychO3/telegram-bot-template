@@ -1,0 +1,38 @@
+{% macro menu() %}
+<ul class="navbar-nav">
+  {% for item in admin_view.admin.menu() %}
+  {% if not item.menu_class_name == "hide" and item.is_accessible() and item.is_visible() %}
+  <li class="nav-item {% if item.is_active(admin_view) %}active{% endif %}">
+    <a class="nav-link" href="{{ item.get_url() }}">
+      {% if item.icon_type == 'ti' %}
+      <i class="ti ti-{{ item.icon_value }}"></i>
+      {% else %}
+      <i class="{{ item.icon_type }} {{ item.icon_value }}"></i>
+      {% endif %}
+      <span class="nav-link-title">{{ item.name }}</span>
+    </a>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+{% endmacro %}
+
+{% macro menu_links() %}
+<div class="nav-item dropdown">
+  <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown">
+    {% if current_user.is_authenticated %}
+    <span class="avatar avatar-sm">{{ current_user.email[0] | upper }}</span>
+    <div class="d-none d-xl-block ps-2">
+      <div>{{ current_user.email }}</div>
+    </div>
+    {% endif %}
+  </a>
+  <div class="dropdown-menu dropdown-menu-end">
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('security.logout') }}" class="dropdown-item">Logout</a>
+    {% else %}
+    <a href="{{ url_for('security.login') }}" class="dropdown-item">Login</a>
+    {% endif %}
+  </div>
+</div>
+{% endmacro %} 

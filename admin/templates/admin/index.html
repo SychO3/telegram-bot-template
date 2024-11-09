@@ -1,223 +1,207 @@
-{% extends 'admin/master.html' %} {% block body %} {{ super() }} {% if
-current_user.is_authenticated %}
+{% extends 'admin/base_tabler.html' %}
 
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <h1>
-    Dashboard
-    <small>Control panel</small>
-  </h1>
-  <ol class="breadcrumb">
-    <li>
-      <a href="#"><i class="fa fa-dashboard"></i> Home</a>
-    </li>
-    <li class="active">Dashboard</li>
-  </ol>
-</section>
-
-<section class="content">
-  <!-- Small boxes (Stat box) -->
-  <div class="row">
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-aqua">
-        <div class="inner">
-          <h3>{{ order_count }}</h3>
-          <p>Orders Count</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-bag"></i>
-        </div>
-        <a href="{{ 'orders' }}" class="small-box-footer"
-          >More info <i class="fa fa-arrow-circle-right"></i
-        ></a>
+{% block body %}
+{% if current_user.is_authenticated %}
+<div class="container-xl">
+  <div class="page-header d-print-none">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="page-title">Dashboard</h2>
       </div>
     </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-green">
-        <div class="inner">
-          <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-          <p>Bounce Rate</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-stats-bars"></i>
-        </div>
-        <a href="#" class="small-box-footer"
-          >More info <i class="fa fa-arrow-circle-right"></i
-        ></a>
-      </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-yellow">
-        <div class="inner">
-          <h3>{{ new_user_count }}</h3>
-
-          <p>New users per day</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-person-add"></i>
-        </div>
-        <a
-          href="{{ 'users/?flt2_10=' ~ period_start.strftime('%Y-%m-%d+%H:%M:%S') }}"
-          class="small-box-footer"
-          >More info <i class="fa fa-arrow-circle-right"></i
-        ></a>
-      </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-red">
-        <div class="inner">
-          <h3>{{ user_count }}</h3>
-
-          <p>Unique users</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-pie-graph"></i>
-        </div>
-        <a href="{{ 'users' }}" class="small-box-footer"
-          >More info <i class="fa fa-arrow-circle-right"></i
-        ></a>
-      </div>
-    </div>
-    <!-- ./col -->
   </div>
-  <!-- /.row -->
-  <!-- Main row -->
-  <div class="row">
-    <!-- Left col -->
-    <section class="col-lg-7 connectedSortable">
-      <!-- Custom tabs (Charts with tabs)-->
-      <div class="nav-tabs-custom">
-        <!-- Tabs within a box -->
-        <ul class="nav nav-tabs pull-right">
-          <li class="active">
-            <a href="#revenue-chart" data-toggle="tab">Area</a>
-          </li>
-          <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-          <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
-        </ul>
-        <div class="tab-content no-padding">
-          <!-- Morris chart - Sales -->
-          <div
-            class="chart tab-pane active"
-            id="revenue-chart"
-            style="position: relative; height: 300px"
-          ></div>
-          <div
-            class="chart tab-pane"
-            id="sales-chart"
-            style="position: relative; height: 300px"
-          ></div>
+  
+  <div class="row row-deck row-cards">
+    <div class="col-sm-6 col-lg-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="subheader">Orders</div>
+            <div class="ms-auto lh-1">
+              <div class="dropdown">
+                <i class="ti ti-shopping-cart text-blue"></i>
+              </div>
+            </div>
+          </div>
+          <div class="h1 mb-3">{{ order_count }}</div>
+          <div class="d-flex mb-2">
+            <div>Orders Count</div>
+          </div>
         </div>
       </div>
-      <!-- /.nav-tabs-custom -->
-    </section>
-    <!-- /.Left col -->
-    <!-- right col (We are only adding the ID to make the widgets sortable)-->
-    <section class="col-lg-5 connectedSortable">
-      <!-- Map box -->
-      <div class="box box-solid bg-light-blue-gradient">
-        <div class="box-header">
-          <!-- tools box -->
-          <div class="pull-right box-tools">
-            <button
-              type="button"
-              class="btn btn-primary btn-sm daterange pull-right"
-              data-toggle="tooltip"
-              title="Date range"
-            >
-              <i class="fa fa-calendar"></i>
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary btn-sm pull-right"
-              data-widget="collapse"
-              data-toggle="tooltip"
-              title="Collapse"
-              style="margin-right: 5px"
-            >
-              <i class="fa fa-minus"></i>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="subheader">New Users</div>
+            <div class="ms-auto lh-1">
+              <div class="dropdown">
+                <i class="ti ti-users text-green"></i>
+              </div>
+            </div>
+          </div>
+          <div class="h1 mb-3">{{ new_user_count }}</div>
+          <div class="d-flex mb-2">
+            <div>New users per day</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="subheader">Total Users</div>
+            <div class="ms-auto lh-1">
+              <div class="dropdown">
+                <i class="ti ti-user text-yellow"></i>
+              </div>
+            </div>
+          </div>
+          <div class="h1 mb-3">{{ user_count }}</div>
+          <div class="d-flex mb-2">
+            <div>Unique users</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% else %}
+<div class="page page-center">
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1050">
+  </div>
+
+  <div class="container container-tight py-4">
+    <div class="text-center mb-4">
+      <h1>TelegramBot 管理后台</h1>
+    </div>
+    <div class="card card-md">
+      <div class="card-body">
+        <form id="login-form" onsubmit="handleLogin(event)">
+          <div class="mb-3">
+            <label class="form-label">邮箱</label>
+            <input type="email" name="email" class="form-control" placeholder="your@email.com" autocomplete="off" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">密码</label>
+            <input type="password" name="password" class="form-control" placeholder="输入密码" autocomplete="off" required>
+          </div>
+          <div class="form-footer">
+            <button type="submit" class="btn btn-primary w-100" id="login-button">
+              <i class="ti ti-login me-2"></i>
+              登录
             </button>
           </div>
-          <!-- /. tools -->
-
-          <i class="fa fa-map-marker"></i>
-
-          <h3 class="box-title">Visitors</h3>
-        </div>
-        <div class="box-body">
-          <div id="world-map" style="height: 250px; width: 100%"></div>
-        </div>
-        <!-- /.box-body-->
-        <div class="box-footer no-border">
-          <div class="row">
-            <div
-              class="col-xs-4 text-center"
-              style="border-right: 1px solid #f4f4f4"
-            >
-              <div id="sparkline-1"></div>
-              <div class="knob-label">Visitors</div>
-            </div>
-            <!-- ./col -->
-            <div
-              class="col-xs-4 text-center"
-              style="border-right: 1px solid #f4f4f4"
-            >
-              <div id="sparkline-2"></div>
-              <div class="knob-label">Online</div>
-            </div>
-            <!-- ./col -->
-            <div class="col-xs-4 text-center">
-              <div id="sparkline-3"></div>
-              <div class="knob-label">Exists</div>
-            </div>
-            <!-- ./col -->
-          </div>
-          <!-- /.row -->
-        </div>
+        </form>
       </div>
-      <!-- /.box -->
-    </section>
-    <!-- right col -->
+    </div>
   </div>
-  <!-- /.row (main row) -->
-</section>
-<!-- /.content -->
-{% else %} {% if not current_user.is_authenticated %}
-<section
-  class="content"
-  style="color: white; height: 100vh; display: flex; align-items: center"
->
-  <div class="col-sm-12 text-center">
-    <h1>Telegram Bot Admin Panel</h1>
-    <p class="lead">Authentication</p>
-    <p>
-      This is an admin panel created for managing users, moderating and viewing
-      telegram bot analytics. <br />
-    </p>
-    <p>
-      Default email/password for first superuser:<br /><br />
+</div>
 
-      email: <b>{{ default_email }}</b> <br />
-      password: <b>{{ default_password }}</b> <br />
-      <br />
-    </p>
+<script>
+function createToast(message, type = 'error') {
+    const toastContainer = document.querySelector('.toast-container');
+    const toastId = `toast-${Date.now()}`;
+    
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    toast.id = toastId;
+    
+    const icon = type === 'success' ? 'check' : 'alert-triangle';
+    const color = type === 'success' ? 'green' : 'red';
+    
+    toast.innerHTML = `
+        <div class="toast-header bg-${color}-lt">
+            <i class="ti ti-${icon} text-${color} me-2"></i>
+            <strong class="me-auto">${type === 'success' ? '成功' : '错误'}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            ${message}
+        </div>
+    `;
+    
+    toastContainer.appendChild(toast);
+    
+    const bsToast = new bootstrap.Toast(toast, {
+        autohide: true,
+        delay: 3000
+    });
+    
+    bsToast.show();
+    
+    toast.addEventListener('hidden.bs.toast', () => {
+        toast.remove();
+    });
+}
 
-    <p>
-      <a class="btn btn-primary" href="{{ url_for('security.login') }}"
-        >Login</a
-      >
-      <a class="btn btn-default" href="{{ url_for('security.register') }}"
-        >Register</a
-      >
-    </p>
-  </div>
-</section>
-{% endif %} {% endif %} {% endblock body %}
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const email = form.email.value.trim();
+    const password = form.password.value;
+    const loginButton = document.getElementById('login-button');
+    
+    // 验证表单
+    if (!email) {
+        createToast('请输入邮箱地址');
+        return;
+    }
+    if (!password) {
+        createToast('请输入密码');
+        return;
+    }
+    
+    // 禁用登录按钮
+    loginButton.disabled = true;
+    loginButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>登录中...';
+    
+    // 发送登录请求
+    fetch('{{ url_for("security.login") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': '{{ csrf_token() }}'
+        },
+        body: new URLSearchParams({
+            'email': email,
+            'password': password,
+            'csrf_token': '{{ csrf_token() }}'
+        })
+    })
+    .then(response => {
+        if (response.redirected) {
+            window.location.href = response.url;
+            return;
+        }
+        return response.text();
+    })
+    .then(html => {
+        if (html && html.includes('Invalid password')) {
+            createToast('密码错误');
+        } else if (html && html.includes('Specified user does not exist')) {
+            createToast('用户不存在');
+        } else {
+            createToast('登录失败，请重试');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        createToast('登录失败，请重试');
+    })
+    .finally(() => {
+        // 恢复登录按钮
+        loginButton.disabled = false;
+        loginButton.innerHTML = '<i class="ti ti-login me-2"></i>登录';
+    });
+}
+</script>
+{% endif %}
+{% endblock %}

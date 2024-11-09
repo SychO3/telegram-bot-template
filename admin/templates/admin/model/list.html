@@ -1,0 +1,200 @@
+{% extends 'admin/base_tabler.html' %}
+
+{% block body %}
+<div class="container-xl">
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1050">
+  </div>
+
+  <div class="page-header d-print-none">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="page-title">{{ admin_view.name }}</h2>
+      </div>
+      <div class="col-auto ms-auto d-print-none">
+        {% if admin_view.can_create %}
+        <a href="{{ url_for('.create_view') }}" class="btn btn-primary">
+          <i class="ti ti-plus"></i>
+          Create New
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-vcenter card-table">
+        <thead>
+          <tr>
+            {% for c, name in list_columns %}
+            <th>{{ name }}</th>
+            {% endfor %}
+            {% if admin_view.can_edit or admin_view.can_delete %}
+            <th class="w-1"></th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data %}
+          <tr>
+            {% for c, name in list_columns %}
+            <td>
+              {% if c == 'is_admin' %}
+                <label class="form-check form-switch">
+                  <input class="form-check-input toggle-admin" type="checkbox" 
+                         data-id="{{ get_pk_value(row) }}"
+                         data-url="{{ url_for('users.ajax_update', id=get_pk_value(row)) }}"
+                         {% if get_value(row, c) %}checked{% endif %}>
+                </label>
+              {% else %}
+                {{ get_value(row, c) }}
+              {% endif %}
+            </td>
+            {% endfor %}
+            {% if admin_view.can_edit or admin_view.can_delete %}
+            <td class="text-end">
+              <div class="btn-list flex-nowrap">
+                {% if admin_view.can_edit %}
+                <a href="{{ url_for('.edit_view', id=get_pk_value(row)) }}" class="btn btn-sm btn-icon btn-primary">
+                  <i class="ti ti-edit"></i>
+                </a>
+                {% endif %}
+                {% if admin_view.can_delete %}
+                <form action="{{ url_for('.delete_view', id=get_pk_value(row)) }}" method="POST" style="display: inline" class="delete-form">
+                  {# 这里使用隐藏的 CSRF token #}
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                  <button type="button" class="btn btn-sm btn-icon btn-danger delete-btn">
+                    <i class="ti ti-trash"></i>
+                  </button>
+                </form>
+                {% endif %}
+              </div>
+            </td>
+            {% endif %}
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="{{ list_columns|length + 1 }}">No records found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if num_pages > 1 %}
+    <div class="card-footer d-flex align-items-center">
+      {% import 'admin/lib.html' as lib %}
+      {{ lib.pager(page, num_pages, pager_url) }}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block tail_js %}
+{{ super() }}
+<script>
+function createToast(message, type = 'success') {
+    const toastContainer = document.querySelector('.toast-container');
+    const toastId = `toast-${Date.now()}`;
+    
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    toast.id = toastId;
+    
+    const icon = type === 'success' ? 'check' : 'alert-triangle';
+    const color = type === 'success' ? 'green' : 'red';
+    
+    toast.innerHTML = `
+        <div class="toast-header bg-${color}-lt">
+            <i class="ti ti-${icon} text-${color} me-2"></i>
+            <strong class="me-auto">${type === 'success' ? 'Success' : 'Error'}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            ${message}
+        </div>
+    `;
+    
+    toastContainer.appendChild(toast);
+    
+    const bsToast = new bootstrap.Toast(toast, {
+        autohide: true,
+        delay: 3000
+    });
+    
+    bsToast.show();
+    
+    toast.addEventListener('hidden.bs.toast', () => {
+        toast.remove();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to delete this record?')) {
+                const form = this.closest('.delete-form');
+                fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token() }}',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        alert('Delete failed. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Delete failed. Please try again.');
+                });
+            }
+        });
+    });
+
+    document.querySelectorAll('.toggle-admin').forEach(toggle => {
+        toggle.addEventListener('change', function(e) {
+            const updateUrl = this.dataset.url;
+            const isChecked = this.checked;
+            const originalState = !isChecked;
+            
+            fetch(updateUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    is_admin: isChecked
+                })
+            })
+            .then(async response => {
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.message || 'Update failed');
+                }
+                return data;
+            })
+            .then(data => {
+                createToast('Admin status updated successfully');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // 恢复原始状态
+                this.checked = originalState;
+                createToast(`Failed to update admin status: ${error.message}`, 'error');
+            });
+        });
+    });
+});
+</script>
+{% endblock %} 

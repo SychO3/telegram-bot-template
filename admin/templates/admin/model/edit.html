@@ -1,0 +1,49 @@
+{% extends 'admin/base_tabler.html' %}
+
+{% block body %}
+<div class="container-xl">
+  <div class="page-header d-print-none">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="page-title">编辑 {{ admin_view.name }}</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form action="" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        {% for f in form if f.name != 'csrf_token' %}
+        <div class="mb-3">
+          {{ f.label(class_="form-label") }}
+          {% if f.type == 'BooleanField' %}
+            {{ f(class_="form-check-input") }}
+          {% else %}
+            {% if f.type == 'PasswordField' %}
+              {{ f(class_="form-control", placeholder="Leave blank to keep current password") }}
+            {% else %}
+              {{ f(class_="form-control") }}
+            {% endif %}
+          {% endif %}
+          {% if f.errors %}
+          <div class="invalid-feedback d-block">
+            {% for e in f.errors %}
+            <p>{{ e }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if f.description %}
+          <div class="form-text">{{ f.description }}</div>
+          {% endif %}
+        </div>
+        {% endfor %}
+        <div class="form-footer">
+          <button type="submit" class="btn btn-primary">确定</button>
+          <a href="{{ return_url }}" class="btn btn-link">取消</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %} 
