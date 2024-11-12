@@ -61,4 +61,3 @@ msgstr ""
 #: bot/keyboards/inline/menu.py:11
 msgid "信息按钮"
 msgstr ""
-

@@ -9,7 +9,7 @@
   <!-- CSS files -->
   <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet"/>
-  
+
   {% block head_css %}
   {% endblock %}
 
@@ -33,7 +33,7 @@
             {{ admin_view.admin.name }}
           </a>
         </h1>
-        
+
         <div class="navbar-nav flex-row order-md-last">
           {% if current_user.is_authenticated %}
           <div class="nav-item dropdown">
@@ -70,7 +70,7 @@
     <div class="page-wrapper">
       <!-- Page header -->
       {% block header %}{% endblock %}
-      
+
       <!-- Page body -->
       <div class="page-body">
         <div class="container-xl">
@@ -97,7 +97,7 @@
 
   <!-- Core JS -->
   <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
-  
+
   {% block tail_js %}
   {% endblock %}
 </body>

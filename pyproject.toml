@@ -55,6 +55,9 @@ lint.ignore = ["D", "ANN101", "ANN102", "ANN401", "TD003", "FIX002", "COM812", "
 cache-dir = "/tmp/ruff-cache/"
 extend-exclude = ["logs", "configs", "migrations"]
 
+[tool.ruff.lint.per-file-ignores]
+"admin/app.py" = ["C901"]
+
 [tool.ruff.lint.isort]
 no-lines-before = ["future", "standard-library"]
 known-local-folder = ["bot", "admin"]

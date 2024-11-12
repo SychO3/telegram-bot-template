@@ -1,13 +1,14 @@
 from __future__ import annotations
 import csv
 import io
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 
 from aiogram.types import BufferedInputFile
 
 from bot.database.models import UserModel
 
 CHINA_TZ = timezone(timedelta(hours=8))
+
 
 async def convert_users_to_csv(users: list[UserModel]) -> BufferedInputFile:
     """Export all users in csv file."""

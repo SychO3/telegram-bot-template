@@ -10,7 +10,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="row row-deck row-cards">
     <div class="col-sm-6 col-lg-3">
       <div class="card">
@@ -105,17 +105,17 @@
 function createToast(message, type = 'error') {
     const toastContainer = document.querySelector('.toast-container');
     const toastId = `toast-${Date.now()}`;
-    
+
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.setAttribute('role', 'alert');
     toast.setAttribute('aria-live', 'assertive');
     toast.setAttribute('aria-atomic', 'true');
     toast.id = toastId;
-    
+
     const icon = type === 'success' ? 'check' : 'alert-triangle';
     const color = type === 'success' ? 'green' : 'red';
-    
+
     toast.innerHTML = `
         <div class="toast-header bg-${color}-lt">
             <i class="ti ti-${icon} text-${color} me-2"></i>
@@ -126,16 +126,16 @@ function createToast(message, type = 'error') {
             ${message}
         </div>
     `;
-    
+
     toastContainer.appendChild(toast);
-    
+
     const bsToast = new bootstrap.Toast(toast, {
         autohide: true,
         delay: 3000
     });
-    
+
     bsToast.show();
-    
+
     toast.addEventListener('hidden.bs.toast', () => {
         toast.remove();
     });
@@ -143,12 +143,12 @@ function createToast(message, type = 'error') {
 
 function handleLogin(event) {
     event.preventDefault();
-    
+
     const form = event.target;
     const email = form.email.value.trim();
     const password = form.password.value;
     const loginButton = document.getElementById('login-button');
-    
+
     // 验证表单
     if (!email) {
         createToast('请输入邮箱地址');
@@ -158,11 +158,11 @@ function handleLogin(event) {
         createToast('请输入密码');
         return;
     }
-    
+
     // 禁用登录按钮
     loginButton.disabled = true;
     loginButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>登录中...';
-    
+
     // 发送登录请求
     fetch('{{ url_for("security.login") }}', {
         method: 'POST',

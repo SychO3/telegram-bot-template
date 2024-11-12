@@ -1,7 +1,7 @@
 """Add length to VARCHAR columns
 
 Revision ID: c4954a09f72d
-Revises: 
+Revises:
 Create Date: 2024-10-14 22:40:50.450144
 
 """

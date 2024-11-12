@@ -41,7 +41,7 @@
             <td>
               {% if c == 'is_admin' %}
                 <label class="form-check form-switch">
-                  <input class="form-check-input toggle-admin" type="checkbox" 
+                  <input class="form-check-input toggle-admin" type="checkbox"
                          data-id="{{ get_pk_value(row) }}"
                          data-url="{{ url_for('users.ajax_update', id=get_pk_value(row)) }}"
                          {% if get_value(row, c) %}checked{% endif %}>
@@ -96,17 +96,17 @@
 function createToast(message, type = 'success') {
     const toastContainer = document.querySelector('.toast-container');
     const toastId = `toast-${Date.now()}`;
-    
+
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.setAttribute('role', 'alert');
     toast.setAttribute('aria-live', 'assertive');
     toast.setAttribute('aria-atomic', 'true');
     toast.id = toastId;
-    
+
     const icon = type === 'success' ? 'check' : 'alert-triangle';
     const color = type === 'success' ? 'green' : 'red';
-    
+
     toast.innerHTML = `
         <div class="toast-header bg-${color}-lt">
             <i class="ti ti-${icon} text-${color} me-2"></i>
@@ -117,16 +117,16 @@ function createToast(message, type = 'success') {
             ${message}
         </div>
     `;
-    
+
     toastContainer.appendChild(toast);
-    
+
     const bsToast = new bootstrap.Toast(toast, {
         autohide: true,
         delay: 3000
     });
-    
+
     bsToast.show();
-    
+
     toast.addEventListener('hidden.bs.toast', () => {
         toast.remove();
     });
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const updateUrl = this.dataset.url;
             const isChecked = this.checked;
             const originalState = !isChecked;
-            
+
             fetch(updateUrl, {
                 method: 'POST',
                 headers: {
@@ -197,4 +197,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-{% endblock %} 
+{% endblock %}

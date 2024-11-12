@@ -13,7 +13,6 @@ from bot.handlers.metrics import MetricsView
 from bot.keyboards.default_commands import remove_default_commands, set_default_commands
 from bot.middlewares import register_middlewares
 from bot.middlewares.prometheus import prometheus_middleware_factory
-
 from bot.tasks import demo
 
 
@@ -92,7 +91,7 @@ async def setup_webhook() -> None:
 
 
 async def run_tasks() -> None:
-    scheduler.add_job(demo.demo_task, "interval", seconds=10, args=[bot,])
+    scheduler.add_job(demo.demo_task, "interval", seconds=10, args=[bot])
     logger.info("scheduler starting...")
     scheduler.start()
 
