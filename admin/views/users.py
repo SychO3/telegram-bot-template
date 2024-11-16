@@ -1,12 +1,15 @@
 # ruff: noqa: RUF012
 from __future__ import annotations
 import logging
+from typing import Any, Optional, Union
 
 from flask import Response, abort, jsonify, redirect, request, url_for
 from flask_admin import expose
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.model import BaseModelView
 from flask_login import current_user
 from flask_wtf import FlaskForm
+from sqlalchemy.orm import Query
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +40,7 @@ class UserView(ModelView):
     # 排除不显示的列
     column_exclude_list = ["telegram_id", "fs_uniquifier", "session_data"]
 
-    # 表单中排除的字段
+    # 表单排除的字段
     form_excluded_columns = ["telegram_id", "fs_uniquifier", "session_data", "created_at"]
 
     # 列的友好称
@@ -78,9 +81,7 @@ class UserView(ModelView):
     @expose("/ajax/update/<int:user_id>", methods=["POST"])
     def ajax_update(self, user_id: int) -> tuple[Response, int] | Response:
         if not self.can_edit:
-            return jsonify(
-                {"success": False, "error": "Permission denied", "message": "您没有编辑权限"}
-            ), 403
+            return jsonify({"success": False, "error": "Permission denied", "message": "您没有编辑权限"}), 403
 
         try:
             model = self.session.query(self.model).get(user_id)
@@ -89,9 +90,7 @@ class UserView(ModelView):
 
             json_data = request.get_json()
             if not json_data:
-                return jsonify(
-                    {"success": False, "error": "Invalid Request", "message": "无效的请求数据"}
-                ), 400
+                return jsonify({"success": False, "error": "Invalid Request", "message": "无效的请求数据"}), 400
 
             # 允许更新的布尔字段列表
             allowed_fields = ["is_admin", "is_suspicious", "is_block", "is_premium"]
@@ -107,61 +106,57 @@ class UserView(ModelView):
                     break
 
             if update_field is None:
-                return jsonify(
-                    {"success": False, "error": "Invalid Request", "message": "没有有效的更新字段"}
-                ), 400
+                return jsonify({"success": False, "error": "Invalid Request", "message": "没有有效的更新字段"}), 400
 
             # 确保值是布尔类型
             update_value = bool(update_value)
 
-            # 更新字段
+            # 更新��段
             setattr(model, update_field, update_value)
             self.session.commit()
 
             # 返回更新后的实际值
-            return jsonify({
-                "success": True, 
-                "message": "状态更新成功", 
-                "data": {
-                    "field": update_field,
-                    "value": getattr(model, update_field)
+            return jsonify(
+                {
+                    "success": True,
+                    "message": "状态更新成功",
+                    "data": {"field": update_field, "value": getattr(model, update_field)},
                 }
-            })
+            )
 
         except Exception as ex:
             logger.exception("Unexpected error in ajax_update")
             self.session.rollback()
             return jsonify({"success": False, "error": "Server Error", "message": str(ex)}), 500
 
-    def get_raw_value(self, model, name):
+    def get_raw_value(self, model: Any, name: str) -> Any:
         """直接从数据库获取原始值"""
         try:
             value = getattr(model, name)
-            # 直接从数据库获取原始值
-            if hasattr(value, "_sa_instance_state"):
+            if hasattr(value, "__table__"):
                 # 如果是 SQLAlchemy 对象，获取其实际值
                 return getattr(model.__table__.c, name).type.python_type(value)
-            return value
-        except Exception as e:
-            logger.exception(f"Error getting raw value for {name}")
+            else:
+                return value
+        except Exception:
+            logger.exception("Error getting raw value for %(name)s", {"name": name})
             return False
 
-    def get_value(self, context, model, name):
+    def get_value(self, context: Any, model: Any, name: str) -> Any:
         """重写获取值的方法"""
         try:
-            if name in ['is_admin', 'is_suspicious', 'is_block', 'is_premium']:
+            if name in ["is_admin", "is_suspicious", "is_block", "is_premium"]:
                 raw_value = self.get_raw_value(model, name)
-                logger.info(f"Raw value for {name}: {raw_value}, type: {type(raw_value)}")
+                logger.info("Raw value for %(name)s: %(value)s, type: %(type)s",
+                          {"name": name, "value": raw_value, "type": type(raw_value)})
                 return bool(raw_value)
-            return super(UserView, self).get_value(context, model, name)
-        except Exception as e:
-            logger.exception(f"Error in get_value for {name}")
+            return super().get_value(context, model, name)
+        except Exception:
+            logger.exception("Error in get_value for %(name)s", {"name": name})
             return None
 
-    def _format_bool_value(self, value):
+    def _format_bool_value(self, value: bool | None) -> str:
         """格式化布尔值"""
         if value is None:
-            return False
-        if isinstance(value, int):
-            return value != 0
-        return bool(value)
+            return ""
+        return "是" if value else "否"
