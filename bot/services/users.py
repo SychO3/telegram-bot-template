@@ -119,3 +119,12 @@ async def get_user_count(session: AsyncSession) -> int:
 
     count = result.scalar_one_or_none() or 0
     return int(count)
+
+
+# admin_ids
+@cached(key_builder=lambda session: build_key())
+async def get_admin_ids(session: AsyncSession) -> list[int]:
+    query = select(UserModel.id).filter_by(is_admin=True)
+    result = await session.execute(query)
+    admin_ids = result.scalars()
+    return list(admin_ids)

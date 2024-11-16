@@ -36,11 +36,7 @@ SQLALCHEMY_ECHO = False
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # 数据库连接池配置
-SQLALCHEMY_ENGINE_OPTIONS = {
-    "pool_size": 10,
-    "pool_recycle": 3600,
-    "pool_pre_ping": True
-}
+SQLALCHEMY_ENGINE_OPTIONS = {"pool_size": 10, "pool_recycle": 3600, "pool_pre_ping": True}
 
 # Flask-Security config
 SECURITY_URL_PREFIX = "/admin"
