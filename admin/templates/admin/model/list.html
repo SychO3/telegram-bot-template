@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-
+    
     <div class="card-body border-bottom py-3">
       <div class="d-flex align-items-center">
         <div class="text-muted me-2">
@@ -35,7 +35,7 @@
               <span class="input-icon-addon">
                 <i class="ti ti-search"></i>
               </span>
-              <input type="text"
+              <input type="text" 
                      name="search"
                      class="form-control"
                      placeholder="ID/用户名/姓名..."
@@ -72,8 +72,8 @@
             {% for c, name in list_columns %}
             <td>
               {% if c == 'id' %}
-                <span id="id-{{ get_value(row, c) }}"
-                      class="copy-id"
+                <span id="id-{{ get_value(row, c) }}" 
+                      class="copy-id" 
                       data-clipboard-text="{{ get_value(row, c) }}"
                       title="点击复制 ID">
                   {{ get_value(row, c) }}
@@ -179,7 +179,7 @@ function createToast(message, type = 'success') {
 document.addEventListener('DOMContentLoaded', function() {
     // 初始化 clipboard.js，改为使用新的选择器
     const clipboard = new ClipboardJS('.copy-id');
-
+    
     clipboard.on('success', function(e) {
         createToast('ID已复制到剪贴板');
         e.clearSelection();
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const isChecked = this.checked;
             const originalState = !isChecked;
             const field = this.dataset.field;
-
+            
             // 禁用开关，防止重复点击
             this.disabled = true;
 
@@ -350,7 +350,7 @@ td .form-switch {
     .d-flex.gap-2 {
         flex-direction: column;
     }
-
+    
     .form-control {
         width: 100%;
     }
@@ -414,11 +414,11 @@ td .form-switch {
         flex-direction: column;
         align-items: stretch;
     }
-
+    
     .input-icon {
         margin-bottom: 0.5rem;
     }
-
+    
     .btn-primary {
         width: 100%;
     }

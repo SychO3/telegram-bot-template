@@ -133,6 +133,3 @@ dmypy.json
 
 # Visual Studio Code settings
 .vscode/
-
-# logs
-logs/

@@ -1,30 +1,59 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
-from aiogram.types import BotCommand, BotCommandScopeAllPrivateChats, BotCommandScopeChat
-
-from bot.database.database import sessionmaker
-from bot.services.users import get_admin_ids
+from aiogram.types import BotCommand, BotCommandScopeDefault
 
 if TYPE_CHECKING:
     from aiogram import Bot
 
 users_commands: dict[str, dict[str, str]] = {
     "en": {
-        "start": "start bot",
+        "help": "help",
+        "contacts": "developer contact details",
+        "menu": "main menu with earning schemes",
+        "settings": "setting information about you",
+        "supports": "support contacts",
+    },
+    "uk": {
+        "help": "help",
+        "contacts": "developer contact details",
+        "menu": "main menu with earning schemes",
+        "settings": "setting information about you",
+        "supports": "support contacts",
+    },
+    "ru": {
+        "help": "help",
+        "contacts": "developer contact details",
+        "menu": "main menu with earning schemes",
+        "settings": "setting information about you",
+        "supports": "support contacts",
     },
     "zh": {
-        "start": "开始使用",
+        "help": "帮助",
+        "contacts": "联系方式",
+        "menu": "主菜单",
+        "settings": "设置",
+        "supports": "支持",
     },
 }
 
 admins_commands: dict[str, dict[str, str]] = {
     **users_commands,
     "en": {
-        "admin": "admin panel",
+        "ping": "Check bot ping",
+        "stats": "Show bot stats",
+    },
+    "uk": {
+        "ping": "Check bot ping",
+        "stats": "Show bot stats",
+    },
+    "ru": {
+        "ping": "Check bot ping",
+        "stats": "Show bot stats",
     },
     "zh": {
-        "admin": "管理员面板",
+        "ping": "检查机器人ping",
+        "stats": "显示机器人统计信息",
     },
 }
 
@@ -38,21 +67,20 @@ async def set_default_commands(bot: Bot) -> None:
                 BotCommand(command=command, description=description)
                 for command, description in users_commands[language_code].items()
             ],
-            scope=BotCommandScopeAllPrivateChats(),
+            scope=BotCommandScopeDefault(),
         )
 
-        # Commands for admins
-        async with sessionmaker() as session:
-            admin_ids = await get_admin_ids(session)
-            for admin_id in admin_ids:
-                await bot.set_my_commands(
-                    [
-                        BotCommand(command=command, description=description)
-                        for command, description in admins_commands[language_code].items()
-                    ],
-                    scope=BotCommandScopeChat(chat_id=admin_id),
-                )
+        """ Commands for admins
+        for admin_id in await admin_ids():
+            await bot.set_my_commands(
+                [
+                    BotCommand(command=command, description=description)
+                    for command, description in admins_commands[language_code].items()
+                ],
+                scope=BotCommandScopeChat(chat_id=admin_id),
+            )
+        """
 
 
 async def remove_default_commands(bot: Bot) -> None:
-    await bot.delete_my_commands(scope=BotCommandScopeAllPrivateChats())
+    await bot.delete_my_commands(scope=BotCommandScopeDefault())
