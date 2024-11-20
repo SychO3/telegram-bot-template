@@ -76,7 +76,14 @@ class CacheSettings(EnvBaseSettings):
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/0"
 
 
-class Settings(BotSettings, DBSettings, CacheSettings):
+class GameSettings(EnvBaseSettings):
+    GAME_NAME: str = "pc28"
+    GAME_DESCRIPTION: str = "pc28 game"
+    GAME_URL: str = "https://pc28.com"
+    GAME_FINANCE_URL: str = "https://finance.pc28.com"
+
+
+class Settings(BotSettings, DBSettings, CacheSettings, GameSettings):
     DEBUG: bool = False
 
     SENTRY_DSN: str | None = None

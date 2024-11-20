@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages. VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-02 02:05+0800\n"
-"PO-Revision-Date: 2024-11-02 02:05+0800\n"
+"POT-Creation-Date: 2024-11-16 20:01+0800\n"
+"PO-Revision-Date: 2024-11-16 20:01+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -18,8 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
+#: admin/app.py:194
+#, python-format
+msgid "Failed to delete record. %(error)s"
+msgstr ""
+
 #: bot/handlers/export_users.py:29
 msgid "用户总数：<b>{count}</b>"
+msgstr ""
+
+#: bot/handlers/game_rules.py:10 bot/handlers/game_rules.py:14
+#: bot/keyboards/reply/menu.py:9
+msgid "📜 规则"
+msgstr ""
+
+#: bot/handlers/game_rules.py:15
+msgid "规则内容"
 msgstr ""
 
 #: bot/handlers/info.py:11
@@ -31,7 +45,7 @@ msgid "主菜单标题"
 msgstr ""
 
 #: bot/handlers/start.py:15
-msgid "第一条信息"
+msgid "欢迎使用 pc28 机器人！"
 msgstr ""
 
 #: bot/handlers/support.py:13
@@ -61,3 +75,24 @@ msgstr ""
 #: bot/keyboards/inline/menu.py:11
 msgid "信息按钮"
 msgstr ""
+
+#: bot/keyboards/reply/menu.py:8
+msgid "📝 注单"
+msgstr ""
+
+#: bot/keyboards/reply/menu.py:8
+msgid "💵 流水"
+msgstr ""
+
+#: bot/keyboards/reply/menu.py:9
+msgid "🎉 开奖结果"
+msgstr ""
+
+#: bot/keyboards/reply/menu.py:10
+msgid "⬆️ 上下分群"
+msgstr ""
+
+#: bot/keyboards/reply/menu.py:10
+msgid "💰 投注群"
+msgstr ""
+

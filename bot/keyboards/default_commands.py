@@ -21,9 +21,11 @@ users_commands: dict[str, dict[str, str]] = {
 admins_commands: dict[str, dict[str, str]] = {
     **users_commands,
     "en": {
+        "start": "start bot",
         "admin": "admin panel",
     },
     "zh": {
+        "start": "开始使用",
         "admin": "管理员面板",
     },
 }
